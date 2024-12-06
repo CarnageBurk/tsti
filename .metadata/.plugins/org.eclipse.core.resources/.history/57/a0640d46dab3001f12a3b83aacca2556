@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Buscar Caminos</title>
+    <link rel="stylesheet" href="/static/css/main.css">
+</head>
+<body>
+    <h1>Búsqueda de Caminos</h1>
+
+    <form action="/caminosBuscar/resultados" method="get">
+        <label for="codigoPostal">Código Postal de la ciudad de origen:</label>
+        <input type="number" id="codigoPostal" name="codigoPostal" required>
+        <button type="submit">Buscar</button>
+    </form>
+
+    <div th:if="${mensajeError}">
+        <p th:text="${mensajeError}"></p>
+    </div>
+
+    <div th:if="${caminos != null and caminos.size() > 0}">
+        <h2>Resultados de la Búsqueda:</h2>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID Camino</th>
+                    <th>Ciudad Destino</th>
+                    <th>Estado del Camino</th>
+                    <th>Estado del Clima</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr th:each="camino : ${caminos}">
+                    <td th:text="${camino.idCamino}"></td>
+                    <td th:text="${camino.ciudadDestino}"></td>
+                    <td th:text="${camino.estadoCamino}"></td>
+                    <td th:text="${camino.estadoClima}"></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div th:if="${caminos != null and caminos.size() == 0}">
+        <p>No se encontraron caminos para el código postal proporcionado.</p>
+    </div>
+</body>
+</html>
+
